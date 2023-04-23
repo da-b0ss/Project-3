@@ -3,8 +3,6 @@ COP3530 Project 3 R.M., J.M., A.Z.
 Group 62 : AmanTech
 
 
-BOOST MOBILE (where u at dawg?)
-
 
 
 Features: Our program, FoodSearch, will provide users with easy access to a variety of
