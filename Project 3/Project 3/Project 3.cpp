@@ -9,8 +9,6 @@
 #include <map>
 #include "FoodList.h"
 
-using namespace std;
-
 // Function to split a string into tokens based on a delimiter
 vector<string> split(const string& s, char delimiter) {
     vector<string> tokens;
@@ -21,11 +19,6 @@ vector<string> split(const string& s, char delimiter) {
     }
     return tokens;
 }
-
-// Project 3.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
-
 int main() {
     // Open the CSV file for reading
     ifstream file("assets/food.csv");
@@ -40,9 +33,11 @@ int main() {
     getline(cin, inputString);
     map<string, int> nutrientKey;
 
+
     FoodList foodList = FoodList();
 
     // Creates Map of nutrient key from the first line in the csv file
+
     getline(file, line);
     vector<string> temp = split(line, ',');
 
