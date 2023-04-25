@@ -1,2 +1,8 @@
 ﻿  Project 3.cpp
-  Project 3.vcxproj -> C:\Users\rober\Documents\GitHub\Project-3\Project 3\x64\Debug\Project 3.exe
+C:\Users\PC Med\Documents\GitHub\Project-3\Project 3\Project 3\Project 3.cpp(63,49): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\PC Med\Documents\GitHub\Project-3\Project 3\Project 3\Project 3.cpp(67,45): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\PC Med\Documents\GitHub\Project-3\Project 3\Project 3\Project 3.cpp(71,43): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  LINK : C:\Users\PC Med\Documents\GitHub\Project-3\Project 3\x64\Debug\Project 3.exe not found or not built by the last incremental link; performing full link
+Project 3.obj : error LNK2019: unresolved external symbol "public: __cdecl FoodList::FoodList(void)" (??0FoodList@@QEAA@XZ) referenced in function main
+Project 3.obj : error LNK2019: unresolved external symbol "public: __cdecl FoodList::~FoodList(void)" (??1FoodList@@QEAA@XZ) referenced in function main
+C:\Users\PC Med\Documents\GitHub\Project-3\Project 3\x64\Debug\Project 3.exe : fatal error LNK1120: 2 unresolved externals

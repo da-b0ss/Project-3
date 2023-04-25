@@ -49,10 +49,10 @@ int main() {
 
     int index = 0;
     // Reads entire file
-    while (getline(file, line)) {
+    while (std::getline(file, line)) {
 
         // Case 1: Line contains ""
-        if (line.find("\"") != string::npos) {
+        if (line.find("\"") != std::string::npos) {
 
             // Stores Food category, name, and id
             int parsePosition = line.find(",\"");
@@ -68,7 +68,7 @@ int main() {
             line = line.substr(parsePosition + 1);
 
             // Parses and stores the nutrients
-            vector<string> nutrients = split(line, ',');
+            std::vector<std::string> nutrients = split(line, ',');
 
             int i = 0;
             for (auto iter : nutrients) {
@@ -78,18 +78,18 @@ int main() {
         }
         // Case 2: Lines does not contain ""
         else {
-            vector<string> parsedLine = split(line, ',');
+            std::vector<std::string> parsedLine = split(line, ',');
 
             foodList.foodList[index].category = parsedLine[0];
             foodList.foodList[index].name = parsedLine[1];
             foodList.foodList[index].id = stoi(parsedLine[2]);
 
             for (int i = 0; i < parsedLine.size() - 3; i++) {
-                foodList.foodList[index].nutrients[i] = stod(parsedLine[i+3]);
+                foodList.foodList[index].nutrients[i] = stod(parsedLine[i + 3]);
                 i++;
             }
         }
-        index++;        
+        index++;
     }
 
     file.close();
