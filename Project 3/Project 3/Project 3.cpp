@@ -6,31 +6,8 @@
 #include <sstream>
 #include <vector>
 #include <string>
-using namespace std;
-
-// Function to split a string into tokens based on a delimiter
-std::vector<std::string> split(const std::string& s, char delimiter) {
-    std::vector<std::string> tokens;
-    std::istringstream ss(s);
-    std::string token;
-    while (std::getline(ss, token, delimiter)) {
-        tokens.push_back(token);
-    }
-    return tokens;
-}
-
-// Project 3.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <string>
 #include <map>
 #include "FoodList.h"
-
-using namespace std;
 
 // Function to split a string into tokens based on a delimiter
 std::vector<std::string> split(const std::string& s, char delimiter) {
@@ -55,19 +32,21 @@ int main() {
     std::string inputString;
     std::cout << "Enter input string: ";
     std::getline(std::cin, inputString);
-    std::map<string, int> nutrientKey;
+    std::map<std::string, int> nutrientKey;
 
     FoodList foodList = FoodList();
 
     // Creates Map of nutrient key from the first line in the csv file
     std::getline(file, line);
-    std::vector<string> temp = split(line, ',');
+    std::vector<std::string> temp = split(line, ',');
 
     int i = 0;
-    for (int i = 0; i < temp.size(); i++) {
-        nutrientKey[temp[i+3]] = i;
+    for (auto iter : temp) {
+        nutrientKey[iter] = i;
+        i++;
     }
 
+    int index = 0;
     // Reads entire file
     while (std::getline(file, line)) {
 
@@ -76,15 +55,15 @@ int main() {
 
             // Stores Food category, name, and id
             int parsePosition = line.find(",\"");
-            foodList.foodList->category = line.substr(0, parsePosition);
+            foodList.foodList[index].category = line.substr(0, parsePosition);
             line = line.substr(parsePosition + 1);
 
             parsePosition = line.find("\",");
-            foodList.foodList->name = line.substr(1, parsePosition - 1);
+            foodList.foodList[index].name = line.substr(1, parsePosition - 1);
             line = line.substr(parsePosition + 2);
 
             parsePosition = line.find(",");
-            foodList.foodList->id = stoi(line.substr(0, parsePosition));
+            foodList.foodList[index].id = stoi(line.substr(0, parsePosition));
             line = line.substr(parsePosition + 1);
 
             // Parses and stores the nutrients
@@ -92,7 +71,7 @@ int main() {
 
             int i = 0;
             for (auto iter : nutrients) {
-                foodList.foodList->nutrients[i] = stod(iter);
+                foodList.foodList[index].nutrients[i] = stod(iter);
                 i++;
             }
         }
@@ -100,18 +79,21 @@ int main() {
         else {
             std::vector<std::string> parsedLine = split(line, ',');
 
-            foodList.foodList->category = parsedLine[0];
-            foodList.foodList->name = parsedLine[1];
-            foodList.foodList->id = stoi(parsedLine[2]);
+            foodList.foodList[index].category = parsedLine[0];
+            foodList.foodList[index].name = parsedLine[1];
+            foodList.foodList[index].id = stoi(parsedLine[2]);
 
             for (int i = 0; i < parsedLine.size() - 3; i++) {
-                foodList.foodList->nutrients[i] = stod(parsedLine[i+3]);
+                foodList.foodList[index].nutrients[i] = stod(parsedLine[i+3]);
                 i++;
             }
         }
-
-        
+        index++;        
     }
+
+    file.close();
+    return 0;
+}
 
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
