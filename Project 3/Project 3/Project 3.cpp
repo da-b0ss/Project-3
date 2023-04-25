@@ -19,6 +19,30 @@ std::vector<std::string> split(const std::string& s, char delimiter) {
     return tokens;
 }
 
+// Project 3.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <string>
+#include <map>
+#include "FoodList.h"
+
+using namespace std;
+
+// Function to split a string into tokens based on a delimiter
+std::vector<std::string> split(const std::string& s, char delimiter) {
+    std::vector<std::string> tokens;
+    std::istringstream ss(s);
+    std::string token;
+    while (std::getline(ss, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
+}
+
 int main() {
     // Open the CSV file for reading
     std::ifstream file("assets/food.csv");
@@ -31,27 +55,63 @@ int main() {
     std::string inputString;
     std::cout << "Enter input string: ";
     std::getline(std::cin, inputString);
+    std::map<string, int> nutrientKey;
 
-    // Search through the first column for the input string
-    bool found = false;
+    FoodList foodList = FoodList();
+
+    // Creates Map of nutrient key from the first line in the csv file
+    std::getline(file, line);
+    std::vector<string> temp = split(line, ',');
+
+    int i = 0;
+    for (int i = 0; i < temp.size(); i++) {
+        nutrientKey[temp[i+3]] = i;
+    }
+
+    // Reads entire file
     while (std::getline(file, line)) {
+
+        // Case 1: Line contains ""
+        if (line.find("\"") != std::string::npos) {
+
+            // Stores Food category, name, and id
+            int parsePosition = line.find(",\"");
+            foodList.foodList->category = line.substr(0, parsePosition);
+            line = line.substr(parsePosition + 1);
+
+            parsePosition = line.find("\",");
+            foodList.foodList->name = line.substr(1, parsePosition - 1);
+            line = line.substr(parsePosition + 2);
+
+            parsePosition = line.find(",");
+            foodList.foodList->id = stoi(line.substr(0, parsePosition));
+            line = line.substr(parsePosition + 1);
+
+            // Parses and stores the nutrients
+            std::vector<std::string> nutrients = split(line, ',');
+
+            int i = 0;
+            for (auto iter : nutrients) {
+                foodList.foodList->nutrients[i] = stod(iter);
+                i++;
+            }
+        }
+        // Case 2: Lines does not contain ""
+        else {
+            std::vector<std::string> parsedLine = split(line, ',');
+
+            foodList.foodList->category = parsedLine[0];
+            foodList.foodList->name = parsedLine[1];
+            foodList.foodList->id = stoi(parsedLine[2]);
+
+            for (int i = 0; i < parsedLine.size() - 3; i++) {
+                foodList.foodList->nutrients[i] = stod(parsedLine[i+3]);
+                i++;
+            }
+        }
+
         
-        /*
-        std::vector<std::string> tokens = split(line, ',');
-        if (tokens[0] == inputString) {
-            found = true;
-            std::cout << "Input string found in CSV file." << std::endl;
-            break;
-        }*/
     }
-
-    if (!found) {
-        std::cout << "Input string not found in CSV file." << std::endl;
-    }
-
-    file.close();
-    return 0;
-}
 
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
