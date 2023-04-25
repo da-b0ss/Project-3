@@ -9,6 +9,8 @@
 #include <map>
 #include "FoodList.h"
 
+using namespace std;
+
 // Function to split a string into tokens based on a delimiter
 vector<string> split(const string& s, char delimiter) {
     vector<string> tokens;

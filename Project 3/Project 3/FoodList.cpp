@@ -1,5 +1,7 @@
 #include "FoodList.h"
 
+using namespace std;
+
 FoodList::FoodList()
 {
 }
